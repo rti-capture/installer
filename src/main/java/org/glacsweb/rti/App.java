@@ -1,13 +1,68 @@
 package org.glacsweb.rti;
 
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.io.BufferedReader;
+import java.util.ArrayList;
+
 /**
- * Hello world!
+ * RTI-VIPS Installer
  *
  */
 public class App 
 {
-    public static void main( String[] args )
-    {
-        System.out.println( "Hello World!" );
+  public static void main(String[] args) throws Exception {
+
+    ArrayList<CommandInvocation> commands = new ArrayList<CommandInvocation>();
+
+    // Start of commands.
+
+    commands.add(new CommandInvocation("mkdir -p build/image"));
+    commands.add(new CommandInvocation("mkdir -p build/files"));
+    commands.add(new CommandInvocation("cp -r /Users/dgc/rti_files/osx/RTIViewer-1.1.0.dmg build/files"));
+  
+    CommandInvocation hdiCommand =
+      new CommandInvocation("hdiutil attach -mountpoint build/image build/files/RTIViewer-1.1.0.dmg");
+  
+    hdiCommand.cleanup.add(new CommandInvocation("hdiutil detach build/image"));
+  
+    commands.add(hdiCommand);
+  
+    commands.add(new CommandInvocation("cp -r build/image/RTIViewer.app /Applications"));
+
+    // End of commands.
+
+    ArrayList<CommandInvocation> successfulCommands = new ArrayList<CommandInvocation>();
+
+    for (CommandInvocation command : commands) {
+
+      System.out.println("Running: " + command.command);
+
+      boolean success = command.run();
+
+      if (success) {
+        successfulCommands.add(command);
+      }
+
+      System.out.println("Output:");
+
+      for (String line : command.stdout) {
+        System.out.println(line);
+      }
+
+      System.out.println("Error:");
+
+      for (String line : command.stderr) {
+        System.out.println(line);
+      }
     }
+
+    // Run cleanup commands
+
+    for (CommandInvocation command : successfulCommands) {
+      for (CommandInvocation cleanupCommand : command.cleanup) {
+        cleanupCommand.run();
+      }
+    }
+  }
 }
