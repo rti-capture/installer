@@ -21,28 +21,6 @@ public class App
 
     Script script = new Gson().fromJson(json, Script.class);
 
-    for (Option option : script.options) {
-
-      ArrayList<CommandInvocation> successfulCommands = new ArrayList<CommandInvocation>();
-
-      for (CommandInvocation command : option.commands) {
-
-        boolean success = command.run();
-
-        if (success) {
-          successfulCommands.add(command);
-        }
-      }
-
-      // Run cleanup commands
-
-      for (CommandInvocation command : successfulCommands) {
-        if (command.cleanup != null) {
-          for (CommandInvocation cleanupCommand : command.cleanup) {
-            cleanupCommand.run();
-          }
-        }
-      }
-    }
+    script.run();
   }
 }

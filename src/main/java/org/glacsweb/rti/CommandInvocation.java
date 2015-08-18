@@ -13,15 +13,14 @@ public class CommandInvocation {
 
   public ArrayList<CommandInvocation> cleanup = new ArrayList<CommandInvocation>();
 
+  public int expectedExitValue = 0;
+
   public transient String stdout = "";
   public transient String stderr = "";
 
 	public transient int exitValue = 0;
-  public int expectedExitValue = 0;
 
 	public boolean run() throws Exception {
-
-System.out.println("Processing command: " + command);
 
     String[] bits = StringUtils.split(command, " ");
 
@@ -34,4 +33,8 @@ System.out.println("Processing command: " + command);
 
 		return exitValue == expectedExitValue;
 	}
+
+  public int commandCount() {
+    return 1 + cleanup.size();
+  }
 }
