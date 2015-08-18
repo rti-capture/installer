@@ -5,51 +5,32 @@ import java.io.InputStreamReader;
 import java.io.BufferedReader;
 import java.util.ArrayList;
 import org.apache.commons.lang3.StringUtils;
+import org.apache.commons.io.IOUtils;
 
 public class CommandInvocation {
 
-	public String[] command;
+	public String command;
 
   public ArrayList<CommandInvocation> cleanup = new ArrayList<CommandInvocation>();
 
-	public ArrayList<String> stdout = new ArrayList<String>();
-	public ArrayList<String> stderr = new ArrayList<String>();
+  public transient String stdout = "";
+  public transient String stderr = "";
 
-	public int exitValue = 0;
+	public transient int exitValue = 0;
   public int expectedExitValue = 0;
-
-	public CommandInvocation(String... command) {
-		this.command = command;
-	}
-
-	public CommandInvocation(String command) {
-		this.command = StringUtils.split(command, " ");
-	}
 
 	public boolean run() throws Exception {
 
-System.out.println(StringUtils.join(command, " "));
-		Process process = new ProcessBuilder(command).start();
+System.out.println("Processing command: " + command);
 
-		InputStream is = process.getInputStream();
-		InputStreamReader isr = new InputStreamReader(is);
-		BufferedReader ibr = new BufferedReader(isr);
+    String[] bits = StringUtils.split(command, " ");
 
-		InputStream es = process.getErrorStream();
-		InputStreamReader esr = new InputStreamReader(es);
-		BufferedReader ebr = new BufferedReader(esr);
+		Process process = new ProcessBuilder(bits).start();
 
 		exitValue = process.waitFor();
 
-		String line;
-
-		while ((line = ibr.readLine()) != null) {
-			stdout.add(line);
-		}
-
-		while ((line = ebr.readLine()) != null) {
-			stderr.add(line);
-		}
+    stdout = IOUtils.toString(process.getInputStream());
+    stderr = IOUtils.toString(process.getErrorStream());
 
 		return exitValue == expectedExitValue;
 	}

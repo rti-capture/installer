@@ -1,0 +1,70 @@
+{
+  "options" : [
+
+    {
+      "label" : "RTI Viewer",
+
+      "commands" : [
+
+        {
+          "command" : "mkdir -p build/image"
+        },
+        
+        {
+          "command" : "mkdir -p build/files"
+        },
+        
+        {
+          "command" : "cp -r /Users/dgc/rti_files/osx/RTIViewer-1.1.0.dmg build/files"
+        },
+        
+        {
+          "command" : "hdiutil attach -mountpoint build/image build/files/RTIViewer-1.1.0.dmg",
+          
+          "cleanup" : [
+            {
+              "command" : "hdiutil detach build/image"
+            }
+          ]
+        },
+        
+        {
+          "command" : "cp -r build/image/RTIViewer.app /Applications"
+        }
+      ]
+    },
+
+    {
+      "label" : "RTI Builder",
+
+      "commands" : [
+
+        {
+          "command" : "mkdir -p build/image"
+        },
+        
+        {
+          "command" : "mkdir -p build/files"
+        },
+        
+        {
+          "command" : "cp -r /Users/dgc/rti_files/osx/RTIbuilder_2_0_2.dmg build/files"
+        },
+        
+        {
+          "command" : "hdiutil attach -mountpoint build/image build/files/RTIbuilder_2_0_2.dmg",
+          
+          "cleanup" : [
+            {
+              "command" : "hdiutil detach build/image"
+            }
+          ]
+        },
+        
+        {
+          "command" : "cp -r build/image/RTIbuilder-v2.0.2.app /Applications"
+        }
+      ]
+    }
+  ]
+}

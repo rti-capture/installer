@@ -1,9 +1,13 @@
 package org.glacsweb.rti;
 
+import java.io.File;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.BufferedReader;
 import java.util.ArrayList;
+import com.google.gson.Gson;
+import org.apache.commons.io.FileUtils;
+import java.nio.charset.Charset;
 
 /**
  * RTI-VIPS Installer
@@ -13,24 +17,9 @@ public class App
 {
   public static void main(String[] args) throws Exception {
 
-    Script script = new Script();
+    String json = FileUtils.readFileToString(new File("script.json"));
 
-    Option op1 = new Option("RTI Viewer");
-
-    op1.commands.add(new CommandInvocation("mkdir -p build/image"));
-    op1.commands.add(new CommandInvocation("mkdir -p build/files"));
-    op1.commands.add(new CommandInvocation("cp -r /Users/dgc/rti_files/osx/RTIViewer-1.1.0.dmg build/files"));
-  
-    CommandInvocation hdiCommand1 =
-      new CommandInvocation("hdiutil attach -mountpoint build/image build/files/RTIViewer-1.1.0.dmg");
-  
-    hdiCommand1.cleanup.add(new CommandInvocation("hdiutil detach build/image"));
-  
-    op1.commands.add(hdiCommand1);
-  
-    op1.commands.add(new CommandInvocation("cp -r build/image/RTIViewer.app /Applications"));
-
-    script.options.add(op1);
+    Script script = new Gson().fromJson(json, Script.class);
 
     for (Option option : script.options) {
 
@@ -38,32 +27,20 @@ public class App
 
       for (CommandInvocation command : option.commands) {
 
-        System.out.println("Running: " + command.command);
-
         boolean success = command.run();
 
         if (success) {
           successfulCommands.add(command);
-        }
-
-        System.out.println("Output:");
-
-        for (String line : command.stdout) {
-          System.out.println(line);
-        }
-
-        System.out.println("Error:");
-
-        for (String line : command.stderr) {
-          System.out.println(line);
         }
       }
 
       // Run cleanup commands
 
       for (CommandInvocation command : successfulCommands) {
-        for (CommandInvocation cleanupCommand : command.cleanup) {
-          cleanupCommand.run();
+        if (command.cleanup != null) {
+          for (CommandInvocation cleanupCommand : command.cleanup) {
+            cleanupCommand.run();
+          }
         }
       }
     }
