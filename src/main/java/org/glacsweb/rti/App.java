@@ -13,55 +13,58 @@ public class App
 {
   public static void main(String[] args) throws Exception {
 
-    ArrayList<CommandInvocation> commands = new ArrayList<CommandInvocation>();
+    Script script = new Script();
 
-    // Start of commands.
+    Option op1 = new Option("RTI Viewer");
 
-    commands.add(new CommandInvocation("mkdir -p build/image"));
-    commands.add(new CommandInvocation("mkdir -p build/files"));
-    commands.add(new CommandInvocation("cp -r /Users/dgc/rti_files/osx/RTIViewer-1.1.0.dmg build/files"));
+    op1.commands.add(new CommandInvocation("mkdir -p build/image"));
+    op1.commands.add(new CommandInvocation("mkdir -p build/files"));
+    op1.commands.add(new CommandInvocation("cp -r /Users/dgc/rti_files/osx/RTIViewer-1.1.0.dmg build/files"));
   
-    CommandInvocation hdiCommand =
+    CommandInvocation hdiCommand1 =
       new CommandInvocation("hdiutil attach -mountpoint build/image build/files/RTIViewer-1.1.0.dmg");
   
-    hdiCommand.cleanup.add(new CommandInvocation("hdiutil detach build/image"));
+    hdiCommand1.cleanup.add(new CommandInvocation("hdiutil detach build/image"));
   
-    commands.add(hdiCommand);
+    op1.commands.add(hdiCommand1);
   
-    commands.add(new CommandInvocation("cp -r build/image/RTIViewer.app /Applications"));
+    op1.commands.add(new CommandInvocation("cp -r build/image/RTIViewer.app /Applications"));
 
-    // End of commands.
+    script.options.add(op1);
 
-    ArrayList<CommandInvocation> successfulCommands = new ArrayList<CommandInvocation>();
+    for (Option option : script.options) {
 
-    for (CommandInvocation command : commands) {
+      ArrayList<CommandInvocation> successfulCommands = new ArrayList<CommandInvocation>();
 
-      System.out.println("Running: " + command.command);
+      for (CommandInvocation command : option.commands) {
 
-      boolean success = command.run();
+        System.out.println("Running: " + command.command);
 
-      if (success) {
-        successfulCommands.add(command);
+        boolean success = command.run();
+
+        if (success) {
+          successfulCommands.add(command);
+        }
+
+        System.out.println("Output:");
+
+        for (String line : command.stdout) {
+          System.out.println(line);
+        }
+
+        System.out.println("Error:");
+
+        for (String line : command.stderr) {
+          System.out.println(line);
+        }
       }
 
-      System.out.println("Output:");
+      // Run cleanup commands
 
-      for (String line : command.stdout) {
-        System.out.println(line);
-      }
-
-      System.out.println("Error:");
-
-      for (String line : command.stderr) {
-        System.out.println(line);
-      }
-    }
-
-    // Run cleanup commands
-
-    for (CommandInvocation command : successfulCommands) {
-      for (CommandInvocation cleanupCommand : command.cleanup) {
-        cleanupCommand.run();
+      for (CommandInvocation command : successfulCommands) {
+        for (CommandInvocation cleanupCommand : command.cleanup) {
+          cleanupCommand.run();
+        }
       }
     }
   }
