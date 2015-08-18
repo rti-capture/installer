@@ -1,4 +1,4 @@
-package org.glacsweb.rti;
+package org.glacsweb.rti.installer;
 
 import java.io.File;
 import java.io.InputStream;
