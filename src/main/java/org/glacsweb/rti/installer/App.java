@@ -8,6 +8,7 @@ import java.util.ArrayList;
 import com.google.gson.Gson;
 import org.apache.commons.io.FileUtils;
 import java.nio.charset.Charset;
+import javax.swing.SwingUtilities;
 
 /**
  * RTI-VIPS Installer
@@ -21,6 +22,14 @@ public class App
 
     Script script = new Gson().fromJson(json, Script.class);
 
-    script.run();
+    UserInterface ui = new UserInterface(script);
+
+    // Schedules the application to be run at the correct time in the event queue.
+    SwingUtilities.invokeLater(ui);
+
+//   System.out.println(script.dependencies.get("git").check());
+//   script.run();
+
+    
   }
 }

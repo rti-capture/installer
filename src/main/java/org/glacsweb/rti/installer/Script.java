@@ -1,9 +1,11 @@
 package org.glacsweb.rti.installer;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 public class Script {
 
+  public HashMap<String,Dependency> dependencies = new HashMap<String,Dependency>();
   public ArrayList<Option> options = new ArrayList<Option>();
 
   public int commandCount() {
@@ -21,6 +23,8 @@ public class Script {
     int total = commandCount();
     int current = 0;
 
+    UserInterface.setMaximumStep(total);
+
     for (Option option : options) {
 
       ArrayList<CommandInvocation> successfulCommands = new ArrayList<CommandInvocation>();
@@ -28,6 +32,8 @@ public class Script {
       for (CommandInvocation command : option.commands) {
 
         current++;
+
+        UserInterface.setStep(current);
 
 System.out.println(current + "/" + total + ": " + command.command);
         boolean success = command.run();
@@ -48,6 +54,8 @@ System.out.println(current + "/" + total + ": " + command.command);
           }
         }
       }
+
+      UserInterface.selectCard("finish");
     }
   }
 }

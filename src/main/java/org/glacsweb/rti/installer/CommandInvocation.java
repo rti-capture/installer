@@ -20,6 +20,10 @@ public class CommandInvocation {
 
 	public transient int exitValue = 0;
 
+  public CommandInvocation(String command) {
+    this.command = command;
+  }
+
 	public boolean run() throws Exception {
 
     String[] bits = StringUtils.split(command, " ");
@@ -35,6 +39,12 @@ public class CommandInvocation {
 	}
 
   public int commandCount() {
-    return 1 + cleanup.size();
+
+    int count = 1;
+
+    if (cleanup != null)
+      count += cleanup.size();
+
+    return count;
   }
 }

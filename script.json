@@ -1,4 +1,17 @@
 {
+  "dependencies" : {
+
+    "git" : {
+
+      "type" : "osx installation request",
+
+      "command" : {
+        "command" : "git --version"
+      }
+    }
+    
+  },
+
   "options" : [
 
     {
@@ -6,9 +19,6 @@
 
       "commands" : [
 
-        {
-          "command" : "mkdir -p build/image"
-        },
         
         {
           "command" : "mkdir -p build/files"
