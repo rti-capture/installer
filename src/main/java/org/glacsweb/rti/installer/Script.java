@@ -35,7 +35,7 @@ public class Script {
     for (Option option : options) {
 
       if (selectedOptions.indexOf(option.label) != -1) {
-System.out.println("Running option: " + option.label);
+
         for (String dependencyKey : option.dependencies) {
 
           Dependency dependency = dependencies.get(dependencyKey);

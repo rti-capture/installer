@@ -184,6 +184,10 @@ public class UserInterface implements Runnable {
     }
   }
 
+  public static void setTitle(String title) {
+    ui.title.setText(title);
+  }
+
   public ArrayList<String> getSelectedOptions() {
 
     ArrayList<String> selectedOptions = new ArrayList<String>();
