@@ -26,6 +26,9 @@ public class App
 
     Script script = new Gson().fromJson(json, Script.class);
 
+    for (Option option : script.options)
+      option.script = script;
+
     UserInterface ui = new UserInterface(script);
 
     // Schedules the application to be run at the correct time in the event queue.

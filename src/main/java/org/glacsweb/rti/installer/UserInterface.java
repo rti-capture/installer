@@ -23,6 +23,7 @@ import javax.swing.SpringLayout;
 import javax.swing.border.BevelBorder;
 import org.apache.commons.lang.exception.ExceptionUtils;
 import java.util.ArrayList;
+import javax.swing.JOptionPane;
  
 public class UserInterface implements Runnable {
 
@@ -193,5 +194,10 @@ public class UserInterface implements Runnable {
       }
     }
     return null;
+  }
+
+  public static void showWaitDialog(String label) {
+    JOptionPane.showMessageDialog(null, "Please continue once '" + label +
+        "' is installed.", "Installer", JOptionPane.INFORMATION_MESSAGE);
   }
 }

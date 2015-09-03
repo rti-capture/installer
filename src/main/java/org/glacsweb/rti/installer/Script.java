@@ -8,7 +8,7 @@ public class Script {
   public HashMap<String,Dependency> dependencies = new HashMap<String,Dependency>();
   public ArrayList<Option> options = new ArrayList<Option>();
 
-  public int commandCount() {
+  public int commandCount() throws Exception {
 
     int count = 0;
 
@@ -26,6 +26,31 @@ public class Script {
     UserInterface.setMaximumStep(total);
 
     for (Option option : options) {
+
+      for (String dependencyKey : option.dependencies) {
+
+        Dependency dependency = dependencies.get(dependencyKey);
+
+        if (dependency == null)
+          throw new Exception("Unrecognised dependency: " + dependencyKey);
+
+        if (dependency.check() == false) {
+
+          if (dependency.installCommands != null) {
+
+            for (CommandInvocation command : dependency.installCommands) {
+
+              current++;
+
+              UserInterface.setStep(current);
+
+              System.out.println(current + "/" + total + ": " + command.command);
+
+              command.run();
+            }
+          }
+        }
+      }
 
       ArrayList<CommandInvocation> successfulCommands = new ArrayList<CommandInvocation>();
 
