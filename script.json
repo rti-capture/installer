@@ -126,7 +126,7 @@
     "vips" : {
 
       "checkCommand" : {
-        "command" : "ls oij"
+        "command" : "ls homebrew/lib/libvips.dylib"
       },
 
       "installCommands" : [
