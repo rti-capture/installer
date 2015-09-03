@@ -24,6 +24,7 @@ import javax.swing.border.BevelBorder;
 import org.apache.commons.lang.exception.ExceptionUtils;
 import java.util.ArrayList;
 import javax.swing.JOptionPane;
+import javax.swing.UIManager;
  
 public class UserInterface implements Runnable {
 
@@ -56,6 +57,12 @@ public class UserInterface implements Runnable {
 
   @Override
   public void run() {
+
+    try {
+      UIManager.setLookAndFeel(
+          UIManager.getSystemLookAndFeelClassName());
+    } catch (Exception e) {
+    }
 
     frame = new JFrame();
 

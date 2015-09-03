@@ -17,7 +17,7 @@ import javax.swing.SwingUtilities;
 public class App 
 {
   public static void main(String[] args) throws Exception {
-
+System.out.println("user.dir = " + System.getProperty("user.dir"));
     String json = FileUtils.readFileToString(new File("script.json"));
 
     // Lines that start with a # symbol are treated as comments.

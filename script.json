@@ -17,6 +17,7 @@
     "brew" : {
 
       "checkCommand" : {
+        "directory" : "$HOME",
         "command" : "homebrew/bin/brew --version"
       },
 
@@ -31,11 +32,13 @@
       "installCommands" : [
 
         {
+          "directory" : "$HOME",
           "command" : "mkdir homebrew"
         },
 
         {
-          "command" : "tar xzf files/homebrew.tgz --strip 1 -C homebrew"
+          "directory" : "$HOME",
+          "command" : "tar xzf $CWD/files/homebrew.tgz --strip 1 -C homebrew"
         }
       ]
     },
@@ -43,12 +46,14 @@
     "libgphoto2" : {
 
       "checkCommand" : {
+        "directory" : "$HOME",
         "command" : "ls homebrew/lib/libgphoto2.dylib"
       },
 
       "installCommands" : [
         {
           "label"   : "libgphoto2",
+          "directory" : "$HOME",
           "command" : "homebrew/bin/brew install libgphoto2"
         }
       ]
@@ -57,12 +62,14 @@
     "python" : {
 
       "checkCommand" : {
+        "directory" : "$HOME",
         "command" : "ls homebrew/bin/python"
       },
 
       "installCommands" : [
         {
           "label"   : "python",
+          "directory" : "$HOME",
           "command" : "homebrew/bin/brew install python"
         }
       ]
@@ -71,12 +78,14 @@
     "pygtk" : {
 
       "checkCommand" : {
+        "directory" : "$HOME",
         "command" : "ls homebrew/lib/pygtk"
       },
 
       "installCommands" : [
         {
           "label"   : "pygtk",
+          "directory" : "$HOME",
           "command" : "homebrew/bin/brew install pygtk"
         }
       ]
@@ -85,12 +94,14 @@
     "pyserial" : {
 
       "checkCommand" : {
+        "directory" : "$HOME",
         "command" : "ls homebrew/lib/python2.7/site-packages/pyserial-2.7.dist-info/metadata.json"
       },
 
       "installCommands" : [
         {
           "label"   : "pyserial",
+          "directory" : "$HOME",
           "command" : "homebrew/bin/pip install pyserial"
         }
       ]
@@ -99,12 +110,14 @@
     "autoconf" : {
 
       "checkCommand" : {
+        "directory" : "$HOME",
         "command" : "ls homebrew/bin/autoconf"
       },
 
       "installCommands" : [
         {
           "label"   : "Installing autoconf",
+          "directory" : "$HOME",
           "command" : "homebrew/bin/brew install autoconf"
         }
       ]
@@ -113,12 +126,14 @@
     "automake" : {
 
       "checkCommand" : {
+        "directory" : "$HOME",
         "command" : "ls homebrew/bin/automake"
       },
 
       "installCommands" : [
         {
           "label"   : "Installing automake",
+          "directory" : "$HOME",
           "command" : "homebrew/bin/brew install automake"
         }
       ]
@@ -127,12 +142,14 @@
     "vips" : {
 
       "checkCommand" : {
+        "directory" : "$HOME",
         "command" : "ls homebrew/lib/libvips.dylib"
       },
 
       "installCommands" : [
         {
           "label"   : "Installing VIPS",
+          "directory" : "$HOME",
           "command" : "homebrew/bin/brew install homebrew/science/vips"
         }
       ]
@@ -147,29 +164,32 @@
       "commands" : [
 
         {
-          "command" : "mkdir -p build/image"
-        },
-
-        {
-          "command" : "mkdir -p build/files"
-        },
-
-        {
-          "command" : "cp -r /Users/dgc/rti_files/osx/RTIViewer-1.1.0.dmg build/files"
-        },
-
-        {
-          "command" : "hdiutil attach -mountpoint build/image build/files/RTIViewer-1.1.0.dmg",
+          "directory" : "$HOME",
+          "command" : "mkdir -p mountpoint",
 
           "cleanup" : [
             {
-              "command" : "hdiutil detach build/image"
+              "directory" : "$HOME",
+              "command" : "rmdir mountpoint"
             }
           ]
         },
 
         {
-          "command" : "cp -r build/image/RTIViewer.app /Applications"
+          "directory" : "$HOME",
+          "command" : "hdiutil attach -mountpoint mountpoint $CWD/files/RTIViewer-1.1.0.dmg",
+
+          "cleanup" : [
+            {
+              "directory" : "$HOME",
+              "command" : "hdiutil detach mountpoint"
+            }
+          ]
+        },
+
+        {
+          "directory" : "$HOME",
+          "command" : "cp -r mountpoint/RTIViewer.app /Applications"
         }
       ]
     },
@@ -180,29 +200,32 @@
       "commands" : [
 
         {
-          "command" : "mkdir -p build/image"
-        },
-
-        {
-          "command" : "mkdir -p build/files"
-        },
-
-        {
-          "command" : "cp -r /Users/dgc/rti_files/osx/RTIbuilder_2_0_2.dmg build/files"
-        },
-
-        {
-          "command" : "hdiutil attach -mountpoint build/image build/files/RTIbuilder_2_0_2.dmg",
+          "directory" : "$HOME",
+          "command" : "mkdir -p mountpoint",
 
           "cleanup" : [
             {
-              "command" : "hdiutil detach build/image"
+              "directory" : "$HOME",
+              "command" : "rmdir mountpoint"
             }
           ]
         },
 
         {
-          "command" : "cp -r build/image/RTIbuilder-v2.0.2.app /Applications"
+          "directory" : "$HOME",
+          "command" : "hdiutil attach -mountpoint mountpoint $CWD/files/RTIbuilder_2_0_2.dmg",
+
+          "cleanup" : [
+            {
+              "directory" : "$HOME",
+              "command" : "hdiutil detach mountpoint"
+            }
+          ]
+        },
+
+        {
+          "directory" : "$HOME",
+          "command" : "cp -r mountpoint/RTIbuilder-v2.0.2.app /Applications"
         }
       ]
     },
@@ -215,31 +238,33 @@
       "commands" : [
 
         {
-          "command" : "rm -rf temp"
+          "directory" : "$HOME",
+          "command" : "rm -rf .installer_temp"
         },
 
         {
-          "command" : "mkdir temp"
+          "directory" : "$HOME",
+          "command" : "mkdir .installer_temp"
         },
 
         {
-          "directory" : "temp",
+          "directory" : "$HOME/.installer_temp",
           "command" : "git clone https://github.com/rti-capture/rtiacquire",
           "label" : "Fetching RTI Acquire"
         },
 
         {
-          "directory" : "temp/rtiacquire",
+          "directory" : "$HOME/.installer_temp/rtiacquire",
           "command" : "python setup.py build",
           "label" : "Building RTI Acquire",
-          "pathExtra" : "$CWD/homebrew/bin"
+          "pathExtra" : "$HOME/homebrew/bin"
         },
 
         {
-          "directory" : "temp/rtiacquire",
+          "directory" : "$HOME/.installer_temp/rtiacquire",
           "command" : "python setup.py install",
           "label" : "Installing RTI Acquire",
-          "pathExtra" : "$CWD/homebrew/bin"
+          "pathExtra" : "$HOME/homebrew/bin"
         }
       ]
     },
@@ -247,50 +272,59 @@
     {
       "label" : "PTM Fit",
 
-      "dependencies" : [ "autoconf", "automake", "vips" ],
+      "dependencies" : [ "brew", "autoconf", "automake", "vips" ],
 
       "commands" : [
 
         {
-          "command" : "rm -rf temp"
+          "directory" : "$HOME",
+          "command" : "rm -rf .installer_temp"
         },
 
         {
-          "command" : "mkdir temp"
+          "directory" : "$HOME",
+          "command" : "mkdir .installer_temp",
+
+          "cleanup" : [
+            {
+              "directory" : "$HOME",
+              "command" : "rm -rf .installer_temp"
+            }
+          ]
         },
 
         {
-          "directory" : "temp",
-          "command" : "tar xzf /Users/dgc/rti_files/osx/ptmfit-2.3.tgz",
+          "directory" : "$HOME/.installer_temp",
+          "command" : "tar xzf $CWD/files/ptmfit-2.3.tgz",
           "label" : "Fetching PTM Fit"
         },
 
         {
-          "directory" : "temp/ptmfit-2.3",
+          "directory" : "$HOME/.installer_temp/ptmfit-2.3",
           "command" : "sh bootstrap.sh",
           "label" : "Running bootstrap for PTM Fit",
-          "pathExtra" : "$CWD/homebrew/bin"
+          "pathExtra" : "$HOME/homebrew/bin"
         },
 
         {
-          "directory" : "temp/ptmfit-2.3",
+          "directory" : "$HOME/.installer_temp/ptmfit-2.3",
           "command" : "sh configure --prefix $CWD/homebrew",
           "label" : "Configuring PTM Fit",
-          "pathExtra" : "$CWD/homebrew/bin"
+          "pathExtra" : "$HOME/homebrew/bin"
         },
 
         {
-          "directory" : "temp/ptmfit-2.3",
+          "directory" : "$HOME/.installer_temp/ptmfit-2.3",
           "command" : "make",
           "label" : "Building PTM Fit",
-          "pathExtra" : "$CWD/homebrew/bin"
+          "pathExtra" : "$HOME/homebrew/bin"
         },
 
         {
-          "directory" : "temp/ptmfit-2.3",
+          "directory" : "$HOME/.installer_temp/ptmfit-2.3",
           "command" : "make install",
           "label" : "Installing PTM Fit",
-          "pathExtra" : "$CWD/homebrew/bin"
+          "pathExtra" : "$HOME/homebrew/bin"
         }
       ]
     }

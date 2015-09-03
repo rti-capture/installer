@@ -29,31 +29,39 @@ public class CommandInvocation {
     this.command = command;
   }
 
+  private String substituteVariables(String text) {
+
+    text = text.replaceAll("\\$HOME", System.getProperty("user.home"));
+    text = text.replaceAll("\\$CWD", System.getProperty("user.dir"));
+    text = text.replaceAll("\\$FILES", "files");
+
+    return text;
+  }
+
 	public boolean run() throws Exception {
-System.out.println("RUNNING COMMAND: " + command);
 
     UserInterface.setTitle(label);
 
-    String commandString = command;
+    String[] bits = StringUtils.split(command, " ");
 
-    commandString = commandString.replaceAll("\\$HOME", System.getProperty("user.home"));
-    commandString = commandString.replaceAll("\\$CWD", System.getProperty("user.dir"));
+    for (int i = 0; i < bits.length; i++)
+      bits[i] = substituteVariables(bits[i]);
 
-    String[] bits = StringUtils.split(commandString, " ");
+System.out.println("RUNNING COMMAND: " + substituteVariables(command));
+
+for (String bit : bits)
+  System.out.println("bit: " + bit);
 
 		ProcessBuilder processBuilder = new ProcessBuilder(bits);
 
-    if (directory != null)
-      processBuilder.directory(new File(directory));
+    if (directory != null) {
+      System.out.println("Using directory: " + substituteVariables(directory));
+      processBuilder.directory(new File(substituteVariables(directory)));
+    }
 
     if (pathExtra != null) {
       Map<String, String> env = processBuilder.environment();
-      String pathAddition = pathExtra;
-
-      pathAddition = pathAddition.replaceAll("\\$HOME", System.getProperty("user.home"));
-      pathAddition = pathAddition.replaceAll("\\$CWD", System.getProperty("user.dir"));
-
-      env.put("PATH", pathAddition + ":" + env.get("PATH"));
+      env.put("PATH", substituteVariables(pathExtra) + File.pathSeparator + env.get("PATH"));
     }
 
 		Process process = processBuilder.start();

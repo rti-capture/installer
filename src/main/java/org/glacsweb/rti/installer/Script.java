@@ -81,7 +81,7 @@ public class Script {
           boolean success = command.run();
 
           if (success) {
-            successfulCommands.add(command);
+            successfulCommands.add(0, command);
           }
         }
 
@@ -100,6 +100,7 @@ public class Script {
       }
     }
 
+    UserInterface.setTitle("Installation complete.");
     UserInterface.selectCard("finish");
   }
 }
