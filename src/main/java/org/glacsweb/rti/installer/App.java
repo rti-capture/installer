@@ -20,6 +20,10 @@ public class App
 
     String json = FileUtils.readFileToString(new File("script.json"));
 
+    // Lines that start with a # symbol are treated as comments.
+
+    json = json.replaceAll("^#.*", "");
+
     Script script = new Gson().fromJson(json, Script.class);
 
     UserInterface ui = new UserInterface(script);
