@@ -8,12 +8,19 @@ public class Script {
   public HashMap<String,Dependency> dependencies = new HashMap<String,Dependency>();
   public ArrayList<Option> options = new ArrayList<Option>();
 
+  private transient ArrayList<String> selectedOptions;
+
+  public void setSelectedOptions(ArrayList<String> selectedOptions) {
+    this.selectedOptions = selectedOptions;
+  }
+
   public int commandCount() throws Exception {
 
     int count = 0;
 
     for (Option option : options)
-      count += option.commandCount();
+      if (selectedOptions.indexOf(option.label) != -1)
+        count += option.commandCount();
 
     return count;
   }
@@ -27,60 +34,63 @@ public class Script {
 
     for (Option option : options) {
 
-      for (String dependencyKey : option.dependencies) {
+      if (selectedOptions.indexOf(option.label) != -1) {
+System.out.println("Running option: " + option.label);
+        for (String dependencyKey : option.dependencies) {
 
-        Dependency dependency = dependencies.get(dependencyKey);
+          Dependency dependency = dependencies.get(dependencyKey);
 
-        if (dependency == null)
-          throw new Exception("Unrecognised dependency: " + dependencyKey);
+          if (dependency == null)
+            throw new Exception("Unrecognised dependency: " + dependencyKey);
 
-        if (dependency.check() == false) {
+          if (dependency.check() == false) {
 
-          if (dependency.installCommands != null) {
+            if (dependency.installCommands != null) {
 
-            for (CommandInvocation command : dependency.installCommands) {
+              for (CommandInvocation command : dependency.installCommands) {
 
+                current++;
+
+                UserInterface.setStep(current);
+
+                System.out.println(current + "/" + total + ": " + command.command);
+
+                command.run();
+              }
+            }
+          }
+        }
+
+        ArrayList<CommandInvocation> successfulCommands = new ArrayList<CommandInvocation>();
+
+        for (CommandInvocation command : option.commands) {
+
+          current++;
+
+          UserInterface.setStep(current);
+
+          boolean success = command.run();
+
+          if (success) {
+            successfulCommands.add(command);
+          }
+        }
+
+        // Run cleanup commands
+
+        for (CommandInvocation command : successfulCommands) {
+          if (command.cleanup != null) {
+            for (CommandInvocation cleanupCommand : command.cleanup) {
               current++;
-
               UserInterface.setStep(current);
 
-              System.out.println(current + "/" + total + ": " + command.command);
-
-              command.run();
+              cleanupCommand.run();
             }
           }
         }
       }
-
-      ArrayList<CommandInvocation> successfulCommands = new ArrayList<CommandInvocation>();
-
-      for (CommandInvocation command : option.commands) {
-
-        current++;
-
-        UserInterface.setStep(current);
-
-System.out.println(current + "/" + total + ": " + command.command);
-        boolean success = command.run();
-
-        if (success) {
-          successfulCommands.add(command);
-        }
-      }
-
-      // Run cleanup commands
-
-      for (CommandInvocation command : successfulCommands) {
-        if (command.cleanup != null) {
-          for (CommandInvocation cleanupCommand : command.cleanup) {
-            current++;
-System.out.println(current + "/" + total + ": " + command.command);
-            cleanupCommand.run();
-          }
-        }
-      }
-
-      UserInterface.selectCard("finish");
     }
+
+    UserInterface.selectCard("finish");
   }
 }

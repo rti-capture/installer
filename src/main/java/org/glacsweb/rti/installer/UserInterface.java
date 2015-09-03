@@ -144,8 +144,8 @@ public class UserInterface implements Runnable {
       public void run() {
         try {
           nextButton.setEnabled(false);
+          script.setSelectedOptions(getSelectedOptions());
           script.run();
-          getOptions();
         } catch (Exception e) {
           ui.showError(ExceptionUtils.getStackTrace(e));
         }
@@ -184,16 +184,20 @@ public class UserInterface implements Runnable {
     }
   }
 
-  public ArrayList<String> getOptions() {
+  public ArrayList<String> getSelectedOptions() {
+
+    ArrayList<String> selectedOptions = new ArrayList<String>();
+
     for (Component component : selectPanel.getComponents()) {
 
       JCheckBox checkbox = (JCheckBox) component;
 
       if (checkbox.isSelected()) {
-        System.out.println(checkbox.getText());
+        selectedOptions.add(checkbox.getText());
       }
     }
-    return null;
+
+    return selectedOptions;
   }
 
   public static void showWaitDialog(String label) {
