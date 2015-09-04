@@ -13,13 +13,16 @@ public class Option {
 
     int count = 0;
 
-    for (String dependencyKey : dependencies) {
-      Dependency dependency = script.dependencies.get(dependencyKey);
+    if (dependencies != null) {
 
-      if (dependency == null)
-        throw new Exception("Unrecognised dependency: " + dependencyKey);
+      for (String dependencyKey : dependencies) {
+        Dependency dependency = script.dependencies.get(dependencyKey);
 
-      count += dependency.commandCount();
+        if (dependency == null)
+          throw new Exception("Unrecognised dependency: " + dependencyKey);
+
+        count += dependency.commandCount();
+      }
     }
 
     for (CommandInvocation command : commands)

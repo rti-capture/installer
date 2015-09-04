@@ -5,8 +5,8 @@ import java.util.HashMap;
 
 public class Script {
 
-  public HashMap<String,Dependency> dependencies = new HashMap<String,Dependency>();
-  public ArrayList<Option> options = new ArrayList<Option>();
+  public HashMap<String,Dependency> dependencies;
+  public ArrayList<Option> options;
 
   private transient ArrayList<String> selectedOptions;
 
@@ -36,26 +36,35 @@ public class Script {
 
       if (selectedOptions.indexOf(option.label) != -1) {
 
-        for (String dependencyKey : option.dependencies) {
+        if (option.dependencies != null) {
 
-          Dependency dependency = dependencies.get(dependencyKey);
+          for (String dependencyKey : option.dependencies) {
 
-          if (dependency == null)
-            throw new Exception("Unrecognised dependency: " + dependencyKey);
+            Dependency dependency = dependencies.get(dependencyKey);
 
-          if (dependency.check() == false) {
+            if (dependency == null)
+              throw new Exception("Unrecognised dependency: " + dependencyKey);
 
-            if (dependency.installCommands != null) {
+            if (dependency.check() == false) {
 
-              for (CommandInvocation command : dependency.installCommands) {
+              if (dependency.downloads != null) {
+                for (Download download : dependency.downloads) {
+                  download.download();
+                }
+              }
 
-                current++;
+              if (dependency.installCommands != null) {
 
-                UserInterface.setStep(current);
+                for (CommandInvocation command : dependency.installCommands) {
 
-                System.out.println(current + "/" + total + ": " + command.command);
+                  current++;
 
-                command.run();
+                  UserInterface.setStep(current);
+
+                  System.out.println(current + "/" + total + ": " + command.command);
+
+                  command.run();
+                }
               }
             }
           }

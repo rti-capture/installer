@@ -8,6 +8,7 @@ public class Dependency {
   private String label;
   private String type;
   public ArrayList<CommandInvocation> installCommands;
+  public ArrayList<Download> downloads;
 
   public boolean check() {
 

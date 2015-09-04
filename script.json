@@ -20,7 +20,13 @@
         "command" : "homebrew/bin/brew --version"
       },
 
-      "downloads" : [ "homebrew" ],
+      "downloads" : [ 
+        {
+          "label" : "Homebrew",
+          "url"   : "https://github.com/Homebrew/homebrew/tarball/master",
+          "local" : "files/homebrew.tgz"
+        }
+      ],
 
       "installCommands" : [
 
@@ -28,13 +34,8 @@
           "command" : "mkdir homebrew"
         },
 
-#       {
-#         "command" : "curl -L https://github.com/Homebrew/homebrew/tarball/master -o homebrew.tgz"
-#       },
-
         {
-          "command" : "tar xzf /Users/dgc/rti_files/osx/homebrew.tgz --strip 1 -C homebrew"
-#         "command" : "tar xzf homebrew.tgz --strip 1 -C homebrew"
+          "command" : "tar xzf files/homebrew.tgz --strip 1 -C homebrew"
         }
       ]
     },
