@@ -212,7 +212,7 @@ public class UserInterface implements Runnable {
   }
 
   public static void showWaitDialog(String label) {
-    JOptionPane.showMessageDialog(null, "Please continue once '" + label +
+    JOptionPane.showMessageDialog(null, "Click OK once '" + label +
         "' is installed.", "Installer", JOptionPane.INFORMATION_MESSAGE);
   }
 }
