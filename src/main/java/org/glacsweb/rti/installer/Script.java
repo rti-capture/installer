@@ -32,75 +32,88 @@ public class Script {
 
     UserInterface.setMaximumStep(total);
 
-    for (Option option : options) {
+    try {
 
-      if (selectedOptions.indexOf(option.label) != -1) {
+      for (Option option : options) {
 
-        if (option.dependencies != null) {
+        if (selectedOptions.indexOf(option.label) != -1) {
 
-          for (String dependencyKey : option.dependencies) {
+          ArrayList<CommandInvocation> successfulCommands = new ArrayList<CommandInvocation>();
 
-            Dependency dependency = dependencies.get(dependencyKey);
+          try {
 
-            if (dependency == null)
-              throw new Exception("Unrecognised dependency: " + dependencyKey);
+            if (option.dependencies != null) {
 
-            if (dependency.check() == false) {
+              for (String dependencyKey : option.dependencies) {
 
-              if (dependency.downloads != null) {
-                for (Download download : dependency.downloads) {
-                  download.download();
-                }
-              }
+                Dependency dependency = dependencies.get(dependencyKey);
 
-              if (dependency.installCommands != null) {
+                if (dependency == null)
+                  throw new Exception("Unrecognised dependency: " + dependencyKey);
 
-                for (CommandInvocation command : dependency.installCommands) {
+                if (dependency.check() == false) {
 
-                  current++;
+                  if (dependency.downloads != null) {
+                    for (Download download : dependency.downloads) {
+                      download.download();
+                    }
+                  }
 
-                  UserInterface.setStep(current);
+                  if (dependency.installCommands != null) {
 
-                  System.out.println(current + "/" + total + ": " + command.command);
+                    for (CommandInvocation command : dependency.installCommands) {
 
-                  command.run();
+                      current++;
+
+                      UserInterface.setStep(current);
+
+                      System.out.println(current + "/" + total + ": " + command.command);
+
+                      command.run();
+                    }
+                  }
                 }
               }
             }
-          }
-        }
 
-        ArrayList<CommandInvocation> successfulCommands = new ArrayList<CommandInvocation>();
+            for (CommandInvocation command : option.commands) {
 
-        for (CommandInvocation command : option.commands) {
-
-          current++;
-
-          UserInterface.setStep(current);
-
-          boolean success = command.run();
-
-          if (success) {
-            successfulCommands.add(0, command);
-          }
-        }
-
-        // Run cleanup commands
-
-        for (CommandInvocation command : successfulCommands) {
-          if (command.cleanup != null) {
-            for (CommandInvocation cleanupCommand : command.cleanup) {
               current++;
+
               UserInterface.setStep(current);
 
-              cleanupCommand.run();
+              boolean success = command.run();
+
+              if (success == false)
+                throw new FailedStepException(command);
+
+              successfulCommands.add(0, command);
+            }
+
+          } finally {
+
+            // Run cleanup commands
+
+            for (CommandInvocation command : successfulCommands) {
+              if (command.cleanup != null) {
+                for (CommandInvocation cleanupCommand : command.cleanup) {
+                  current++;
+                  UserInterface.setStep(current);
+
+                  cleanupCommand.run();
+                }
+              }
             }
           }
         }
       }
-    }
 
-    UserInterface.setTitle("Installation complete.");
-    UserInterface.selectCard("finish");
+      UserInterface.setTitle("Installation complete.");
+      UserInterface.selectCard("finish");
+
+    } catch (FailedStepException e) {
+
+      UserInterface.showError(e.command.stderr + "\n" + e.command.stdout);
+    }
   }
 }
