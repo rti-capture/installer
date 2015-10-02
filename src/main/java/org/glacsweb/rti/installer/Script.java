@@ -55,7 +55,9 @@ public class Script {
 
                   if (dependency.downloads != null) {
                     for (Download download : dependency.downloads) {
-                      download.download();
+                      if (download.exists() == false) {
+                        download.download();
+                      }
                     }
                   }
 
