@@ -7,11 +7,18 @@
 
       "label" : "Git",
 
-      "type" : "confirmation",
-
       "checkCommand" : {
-        "command" : "git --version"
-      }
+        "command" : "ls homebrew/bin/git",
+        "directory" : "$HOME"
+      },
+
+      "installCommands" : [
+        {
+          "label" : "Git",
+          "directory" : "$HOME",
+          "command" : "homebrew/bin/brew install git"
+        }
+      ]
     },
 
     "brew" : {
@@ -233,7 +240,7 @@
     {
       "label" : "RTI Capture",
 
-      "dependencies" : [ "git", "brew", "libgphoto2", "python", "pygtk", "pyserial" ],
+      "dependencies" : [ "brew", "git", "libgphoto2", "python", "pygtk", "pyserial" ],
 
       "commands" : [
 
@@ -250,7 +257,8 @@
         {
           "directory" : "$HOME/.installer_temp",
           "command" : "git clone https://github.com/rti-capture/rtiacquire",
-          "label" : "Fetching RTI Acquire"
+          "label" : "Fetching RTI Acquire",
+          "pathExtra" : "$HOME/homebrew/bin"
         },
 
         {
@@ -308,7 +316,7 @@
 
         {
           "directory" : "$HOME/.installer_temp/ptmfit-2.3",
-          "command" : "sh configure --prefix $CWD/homebrew",
+          "command" : "sh configure --prefix $HOME/homebrew",
           "label" : "Configuring PTM Fit",
           "pathExtra" : "$HOME/homebrew/bin"
         },
