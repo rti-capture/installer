@@ -7,18 +7,12 @@
 
       "label" : "Git",
 
-      "checkCommand" : {
-        "command" : "ls homebrew/bin/git",
-        "directory" : "$HOME"
-      },
+      "type" : "confirmation",
 
-      "installCommands" : [
-        {
-          "label" : "Git",
-          "directory" : "$HOME",
-          "command" : "homebrew/bin/brew install git"
-        }
-      ]
+      "checkCommand" : {
+        "command" : "git --version",
+        "directory" : "$HOME"
+      }
     },
 
     "brew" : {
@@ -32,7 +26,7 @@
         {
           "label" : "Homebrew",
           "url"   : "https://github.com/Homebrew/homebrew/tarball/master",
-          "local" : "files/homebrew.tgz"
+          "local" : "Resources/Java/files/homebrew.tgz"
         }
       ],
 
@@ -45,7 +39,7 @@
 
         {
           "directory" : "$HOME",
-          "command" : "tar xzf $CWD/files/homebrew.tgz --strip 1 -C homebrew"
+          "command" : "tar xzf $CWD/Resources/Java/files/homebrew.tgz --strip 1 -C homebrew"
         }
       ]
     },
@@ -93,7 +87,8 @@
         {
           "label"   : "pygtk",
           "directory" : "$HOME",
-          "command" : "homebrew/bin/brew install pygtk"
+          "command" : "homebrew/bin/brew install pygtk",
+          "pathExtra" : "$CWD/PlugIns/JRE/Contents/Home/bin"
         }
       ]
     },
@@ -184,7 +179,7 @@
 
         {
           "directory" : "$HOME",
-          "command" : "hdiutil attach -mountpoint mountpoint $CWD/files/RTIViewer-1.1.0.dmg",
+          "command" : "hdiutil attach -mountpoint mountpoint $CWD/Resources/Java/files/RTIViewer-1.1.0.dmg",
 
           "cleanup" : [
             {
@@ -220,7 +215,7 @@
 
         {
           "directory" : "$HOME",
-          "command" : "hdiutil attach -mountpoint mountpoint $CWD/files/RTIbuilder_2_0_2.dmg",
+          "command" : "hdiutil attach -mountpoint mountpoint $CWD/Resources/Java/files/RTIbuilder_2_0_2.dmg",
 
           "cleanup" : [
             {
@@ -303,7 +298,7 @@
 
         {
           "directory" : "$HOME/.installer_temp",
-          "command" : "tar xzf $CWD/files/ptmfit-2.3.tgz",
+          "command" : "tar xzf $CWD/Resources/Java/files/ptmfit-2.3.tgz",
           "label" : "Fetching PTM Fit"
         },
 

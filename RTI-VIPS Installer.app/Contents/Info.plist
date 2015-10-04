@@ -50,6 +50,6 @@
     <key>JVMArguments</key>
     <array/>
     <key>LauncherWorkingDirectory</key>
-    <string>$APP_ROOT/Contents/Resources/Java</string>
+    <string>$APP_ROOT/Contents</string>
   </dict>
 </plist>
