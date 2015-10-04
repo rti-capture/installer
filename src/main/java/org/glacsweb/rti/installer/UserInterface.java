@@ -37,6 +37,7 @@ public class UserInterface implements Runnable {
   private JEditorPane errorPane;
   private JPanel selectPanel;
   private JButton nextButton;
+  public String storedPassword = null;
 
   private enum Card { WELCOME, OPTIONS, PROGRESS, ERROR, FINISHED };
 
@@ -146,6 +147,8 @@ public class UserInterface implements Runnable {
         
     selectCard("progress");
 
+    ui.requestPassword();
+
     Thread worker = new Thread() {
 
       public void run() {
@@ -209,6 +212,17 @@ public class UserInterface implements Runnable {
     }
 
     return selectedOptions;
+  }
+
+  public static void requestPassword() {
+
+    String s = (String) JOptionPane.showInputDialog(ui.frame,
+        "Please enter your password:", "Password Request",
+        JOptionPane.PLAIN_MESSAGE, null, null, "");
+
+    if (s != null) {
+      ui.storedPassword = s;
+    }
   }
 
   public static void showWaitDialog(String label) {
