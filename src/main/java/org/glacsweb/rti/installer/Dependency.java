@@ -12,12 +12,12 @@ public class Dependency {
 
   public boolean check() {
 
-    boolean status;
+    boolean success = true;
 
     try {
-      status = checkCommand.run();
+      checkCommand.run();
     } catch (Exception e) {
-      status = false;
+      success = false;
     }
 
     System.out.println("Status = " + checkCommand.exitValue);
@@ -26,7 +26,7 @@ public class Dependency {
 
     if (type != null) {
       if (type.equals("confirmation")) {
-        if (status == false) {
+        if (success == false) {
           System.out.println("Showing WAIT dialog.");
 
           UserInterface.showWaitDialog(label);
@@ -34,7 +34,7 @@ public class Dependency {
       }
     }
 
-    return status;
+    return success;
   }
 
   public int commandCount() {

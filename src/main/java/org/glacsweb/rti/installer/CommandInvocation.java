@@ -38,7 +38,7 @@ public class CommandInvocation {
     return text;
   }
 
-	public boolean run() throws Exception {
+	public void run() throws Exception {
 
     UserInterface.setTitle(label);
 
@@ -72,7 +72,9 @@ for (String bit : bits)
     stderr = IOUtils.toString(process.getErrorStream());
 System.out.println("STDOUT: " + stdout);
 System.out.println("STDERR: " + stderr);
-		return exitValue == expectedExitValue;
+
+    if (exitValue != expectedExitValue)
+      throw new FailedStepException(this);
 	}
 
   public int commandCount() {

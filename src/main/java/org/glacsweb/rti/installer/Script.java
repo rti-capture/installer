@@ -84,10 +84,7 @@ public class Script {
 
               UserInterface.setStep(current);
 
-              boolean success = command.run();
-
-              if (success == false)
-                throw new FailedStepException(command);
+              command.run();
 
               successfulCommands.add(0, command);
             }
