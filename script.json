@@ -3,6 +3,24 @@
 {
   "dependencies" : {
 
+    "commandLineTools" : {
+
+      "label" : "Command Line Tools",
+
+      "checkCommand" : {
+        "command" : "$CWD/Resources/check_command_line_tools.sh"
+      },
+
+      "installCommands" : [
+
+        {
+          "label" : "Installing Command Line Tools",
+          "directory" : "$CWD",
+          "command" : "Resources/install_command_line_tools.sh"
+        }
+      ]
+    },
+
     "git" : {
 
       "label" : "Git",
@@ -191,7 +209,7 @@
 
         {
           "directory" : "$HOME",
-          "command" : "cp -r mountpoint/RTIViewer.app /Applications"
+          "command" : "$CWD/Resources/sudo.sh cp -r mountpoint/RTIViewer.app /Applications"
         }
       ]
     },
@@ -227,7 +245,7 @@
 
         {
           "directory" : "$HOME",
-          "command" : "cp -r mountpoint/RTIbuilder-v2.0.2.app /Applications"
+          "command" : "$CWD/Resources/sudo.sh cp -r mountpoint/RTIbuilder-v2.0.2.app /Applications"
         }
       ]
     },
@@ -328,6 +346,19 @@
           "command" : "make install",
           "label" : "Installing PTM Fit",
           "pathExtra" : "$HOME/homebrew/bin"
+        }
+      ]
+    },
+    
+    {
+      "label" : "Test",
+
+      "dependencies" : [ "commandLineTools" ],
+
+      "commands" : [
+
+        {
+          "command" : "echo Finished"
         }
       ]
     }
