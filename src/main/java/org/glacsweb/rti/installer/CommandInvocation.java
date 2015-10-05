@@ -15,6 +15,7 @@ public class CommandInvocation {
   public String label;
   public String directory;
   public String pathExtra;
+  public String passwordTrigger;
 
   public ArrayList<CommandInvocation> cleanup = new ArrayList<CommandInvocation>();
 
@@ -65,6 +66,11 @@ for (String bit : bits)
     }
 
 		Process process = processBuilder.start();
+
+    if (passwordTrigger != null) {
+      new TextInject(process.getInputStream(), process.getOutputStream(), passwordTrigger, UserInterface.getStoredPassword()).run();
+      new TextInject(process.getErrorStream(), process.getOutputStream(), passwordTrigger, UserInterface.getStoredPassword()).run();
+    }
 
 		exitValue = process.waitFor();
 
