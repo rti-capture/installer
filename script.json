@@ -14,9 +14,27 @@
       "installCommands" : [
 
         {
-          "label" : "Installing Command Line Tools",
+          "label" : "Command Line Tools",
           "directory" : "$CWD",
           "command" : "Resources/install_command_line_tools.sh"
+        }
+      ]
+    },
+
+    "brew" : {
+
+      "label" : "Brew",
+
+      "checkCommand" : {
+        "command" : "brew --version"
+      },
+
+      "installCommands" : [
+
+        {
+          "label" : "Brew",
+          "directory" : "$CWD",
+          "command" : "Resources/InstallBrew.sh"
         }
       ]
     },
@@ -31,35 +49,6 @@
         "command" : "git --version",
         "directory" : "$HOME"
       }
-    },
-
-    "brew" : {
-
-      "checkCommand" : {
-        "directory" : "$HOME",
-        "command" : "homebrew/bin/brew --version"
-      },
-
-      "downloads" : [ 
-        {
-          "label" : "Homebrew",
-          "url"   : "https://github.com/Homebrew/homebrew/tarball/master",
-          "local" : "Resources/Java/files/homebrew.tgz"
-        }
-      ],
-
-      "installCommands" : [
-
-        {
-          "directory" : "$HOME",
-          "command" : "mkdir homebrew"
-        },
-
-        {
-          "directory" : "$HOME",
-          "command" : "tar xzf $CWD/Resources/Java/files/homebrew.tgz --strip 1 -C homebrew"
-        }
-      ]
     },
 
     "libgphoto2" : {
@@ -353,7 +342,7 @@
     {
       "label" : "Test",
 
-      "dependencies" : [ "commandLineTools" ],
+      "dependencies" : [ "commandLineTools", "brew" ],
 
       "commands" : [
 
