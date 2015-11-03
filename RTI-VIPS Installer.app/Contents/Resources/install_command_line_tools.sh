@@ -11,4 +11,4 @@ PROD=$(softwareupdate -l |
   sed -e 's/^ *//' |
   tr -d '\n') 
 sudo -A softwareupdate -i "$PROD" -v;
-rm $FILE
+rm -f $FILE
