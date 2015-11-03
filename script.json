@@ -43,15 +43,17 @@
     "libgphoto2" : {
 
       "checkCommand" : {
-        "directory" : "$HOME",
-        "command" : "ls homebrew/lib/libgphoto2.dylib"
+        "directory" : "$CWD",
+        "command" : "Resources/checkBrewPackage.sh libgphoto2",
+        "pathExtra" : "/usr/local/bin"
       },
 
       "installCommands" : [
         {
-          "label"   : "libgphoto2",
-          "directory" : "$HOME",
-          "command" : "homebrew/bin/brew install libgphoto2"
+          "label"   : "Installing libgphoto2",
+          "directory" : "$CWD",
+          "command" : "Resources/brew.sh install libgphoto2",
+          "pathExtra" : "/usr/local/bin"
         }
       ]
     },
@@ -59,15 +61,17 @@
     "python" : {
 
       "checkCommand" : {
-        "directory" : "$HOME",
-        "command" : "ls homebrew/bin/python"
+        "directory" : "$CWD",
+        "command" : "Resources/checkBrewPackage.sh python",
+        "pathExtra" : "/usr/local/bin"
       },
 
       "installCommands" : [
         {
-          "label"   : "python",
-          "directory" : "$HOME",
-          "command" : "homebrew/bin/brew install python"
+          "label"   : "Installing python",
+          "directory" : "$CWD",
+          "command" : "Resources/brew.sh install python",
+          "pathExtra" : "/usr/local/bin"
         }
       ]
     },
@@ -75,16 +79,17 @@
     "pygtk" : {
 
       "checkCommand" : {
-        "directory" : "$HOME",
-        "command" : "ls homebrew/lib/pygtk"
+        "directory" : "$CWD",
+        "command" : "Resources/checkBrewPackage.sh pygtk",
+        "pathExtra" : "/usr/local/bin"
       },
 
       "installCommands" : [
         {
-          "label"   : "pygtk",
-          "directory" : "$HOME",
-          "command" : "homebrew/bin/brew install pygtk",
-          "pathExtra" : "$CWD/PlugIns/JRE/Contents/Home/bin"
+          "label"   : "Installing pygtk",
+          "directory" : "$CWD",
+          "command" : "Resources/brew.sh install pygtk",
+          "pathExtra" : "/usr/local/bin"
         }
       ]
     },
@@ -92,15 +97,15 @@
     "pyserial" : {
 
       "checkCommand" : {
-        "directory" : "$HOME",
-        "command" : "ls homebrew/lib/python2.7/site-packages/pyserial-2.7.dist-info/metadata.json"
+        "command" : "/usr/local/bin/pip show pyserial",
+        "pathExtra" : "/usr/local/bin"
       },
 
       "installCommands" : [
         {
-          "label"   : "pyserial",
-          "directory" : "$HOME",
-          "command" : "homebrew/bin/pip install pyserial"
+          "label"   : "Installing pyserial",
+          "command" : "/usr/local/bin/pip install pyserial",
+          "pathExtra" : "/usr/local/bin"
         }
       ]
     },
@@ -109,7 +114,7 @@
 
       "checkCommand" : {
         "directory" : "$CWD",
-        "command" : "Resources/brew.sh list autoconf",
+        "command" : "Resources/checkBrewPackage.sh autoconf",
         "pathExtra" : "/usr/local/bin"
       },
 
@@ -127,7 +132,7 @@
 
       "checkCommand" : {
         "directory" : "$CWD",
-        "command" : "Resources/brew.sh list automake",
+        "command" : "Resources/checkBrewPackage.sh automake",
         "pathExtra" : "/usr/local/bin"
       },
 
@@ -145,7 +150,7 @@
 
       "checkCommand" : {
         "directory" : "$CWD",
-        "command" : "Resources/brew.sh list vips",
+        "command" : "Resources/checkBrewPackage.sh vips",
         "pathExtra" : "/usr/local/bin"
       },
 
@@ -255,21 +260,21 @@
           "directory" : "$HOME/.installer_temp",
           "command" : "git clone https://github.com/rti-capture/rtiacquire",
           "label" : "Fetching RTI Acquire",
-          "pathExtra" : "$HOME/homebrew/bin"
+          "pathExtra" : "/usr/local/bin"
         },
 
         {
           "directory" : "$HOME/.installer_temp/rtiacquire",
           "command" : "python setup.py build",
           "label" : "Building RTI Acquire",
-          "pathExtra" : "$HOME/homebrew/bin"
+          "pathExtra" : "/usr/local/bin"
         },
 
         {
           "directory" : "$HOME/.installer_temp/rtiacquire",
           "command" : "python setup.py install",
           "label" : "Installing RTI Acquire",
-          "pathExtra" : "$HOME/homebrew/bin"
+          "pathExtra" : "/usr/local/bin"
         }
       ]
     },
@@ -330,19 +335,6 @@
           "command" : "$CWD/Resources/sudo.sh make install",
           "label" : "Installing PTM Fit",
           "pathExtra" : "/usr/local/bin"
-        }
-      ]
-    },
-    
-    {
-      "label" : "Test",
-
-      "dependencies" : [ "commandLineTools", "brew" ],
-
-      "commands" : [
-
-        {
-          "command" : "echo Finished"
         }
       ]
     }
