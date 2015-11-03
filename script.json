@@ -14,7 +14,7 @@
       "installCommands" : [
 
         {
-          "label" : "Command Line Tools",
+          "label" : "Installing Command Line Tools",
           "directory" : "$CWD",
           "command" : "Resources/install_command_line_tools.sh"
         }
@@ -26,29 +26,18 @@
       "label" : "Brew",
 
       "checkCommand" : {
-        "command" : "brew --version"
+        "directory" : "$CWD",
+        "command" : "Resources/checkBrew.sh"
       },
 
       "installCommands" : [
 
         {
-          "label" : "Brew",
+          "label" : "Installing Brew",
           "directory" : "$CWD",
           "command" : "Resources/InstallBrew.sh"
         }
       ]
-    },
-
-    "git" : {
-
-      "label" : "Git",
-
-      "type" : "confirmation",
-
-      "checkCommand" : {
-        "command" : "git --version",
-        "directory" : "$HOME"
-      }
     },
 
     "libgphoto2" : {
@@ -119,15 +108,14 @@
     "autoconf" : {
 
       "checkCommand" : {
-        "directory" : "$HOME",
-        "command" : "ls homebrew/bin/autoconf"
+        "command" : "brew list autoconf"
       },
 
       "installCommands" : [
         {
           "label"   : "Installing autoconf",
-          "directory" : "$HOME",
-          "command" : "homebrew/bin/brew install autoconf"
+          "directory" : "$CWD",
+          "command" : "Resources/brew.sh install autoconf"
         }
       ]
     },
@@ -135,15 +123,14 @@
     "automake" : {
 
       "checkCommand" : {
-        "directory" : "$HOME",
-        "command" : "ls homebrew/bin/automake"
+        "command" : "brew list automake"
       },
 
       "installCommands" : [
         {
           "label"   : "Installing automake",
-          "directory" : "$HOME",
-          "command" : "homebrew/bin/brew install automake"
+          "directory" : "$CWD",
+          "command" : "Resources/brew.sh install automake"
         }
       ]
     },
@@ -151,15 +138,14 @@
     "vips" : {
 
       "checkCommand" : {
-        "directory" : "$HOME",
-        "command" : "ls homebrew/lib/libvips.dylib"
+        "command" : "brew list vips"
       },
 
       "installCommands" : [
         {
           "label"   : "Installing VIPS",
-          "directory" : "$HOME",
-          "command" : "homebrew/bin/brew install homebrew/science/vips"
+          "directory" : "$CWD",
+          "command" : "Resources/brew.sh install homebrew/science/vips"
         }
       ]
     }
@@ -242,7 +228,7 @@
     {
       "label" : "RTI Capture",
 
-      "dependencies" : [ "brew", "git", "libgphoto2", "python", "pygtk", "pyserial" ],
+      "dependencies" : [ "commandLineTools", "brew", "libgphoto2", "python", "pygtk", "pyserial" ],
 
       "commands" : [
 
@@ -282,7 +268,7 @@
     {
       "label" : "PTM Fit",
 
-      "dependencies" : [ "brew", "autoconf", "automake", "vips" ],
+      "dependencies" : [ "commandLineTools", "brew", "autoconf", "automake", "vips" ],
 
       "commands" : [
 
@@ -306,35 +292,35 @@
         {
           "directory" : "$HOME/.installer_temp",
           "command" : "tar xzf $CWD/Resources/Java/files/ptmfit-2.3.tgz",
-          "label" : "Fetching PTM Fit"
+          "label" : "Extracting PTM Fit"
         },
 
         {
           "directory" : "$HOME/.installer_temp/ptmfit-2.3",
           "command" : "sh bootstrap.sh",
           "label" : "Running bootstrap for PTM Fit",
-          "pathExtra" : "$HOME/homebrew/bin"
+          "pathExtra" : "/usr/local/bin"
         },
 
         {
           "directory" : "$HOME/.installer_temp/ptmfit-2.3",
-          "command" : "sh configure --prefix $HOME/homebrew",
+          "command" : "sh configure",
           "label" : "Configuring PTM Fit",
-          "pathExtra" : "$HOME/homebrew/bin"
+          "pathExtra" : "/usr/local/bin"
         },
 
         {
           "directory" : "$HOME/.installer_temp/ptmfit-2.3",
           "command" : "make",
           "label" : "Building PTM Fit",
-          "pathExtra" : "$HOME/homebrew/bin"
+          "pathExtra" : "/usr/local/bin"
         },
 
         {
           "directory" : "$HOME/.installer_temp/ptmfit-2.3",
-          "command" : "make install",
+          "command" : "$CWD/Resources/sudo.sh make install",
           "label" : "Installing PTM Fit",
-          "pathExtra" : "$HOME/homebrew/bin"
+          "pathExtra" : "/usr/local/bin"
         }
       ]
     },
