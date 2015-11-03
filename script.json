@@ -108,14 +108,17 @@
     "autoconf" : {
 
       "checkCommand" : {
-        "command" : "brew list autoconf"
+        "directory" : "$CWD",
+        "command" : "Resources/brew.sh list autoconf",
+        "pathExtra" : "/usr/local/bin"
       },
 
       "installCommands" : [
         {
           "label"   : "Installing autoconf",
           "directory" : "$CWD",
-          "command" : "Resources/brew.sh install autoconf"
+          "command" : "Resources/brew.sh install autoconf",
+          "pathExtra" : "/usr/local/bin"
         }
       ]
     },
@@ -123,14 +126,17 @@
     "automake" : {
 
       "checkCommand" : {
-        "command" : "brew list automake"
+        "directory" : "$CWD",
+        "command" : "Resources/brew.sh list automake",
+        "pathExtra" : "/usr/local/bin"
       },
 
       "installCommands" : [
         {
           "label"   : "Installing automake",
           "directory" : "$CWD",
-          "command" : "Resources/brew.sh install automake"
+          "command" : "Resources/brew.sh install automake",
+          "pathExtra" : "/usr/local/bin"
         }
       ]
     },
@@ -138,14 +144,17 @@
     "vips" : {
 
       "checkCommand" : {
-        "command" : "brew list vips"
+        "directory" : "$CWD",
+        "command" : "Resources/brew.sh list vips",
+        "pathExtra" : "/usr/local/bin"
       },
 
       "installCommands" : [
         {
           "label"   : "Installing VIPS",
           "directory" : "$CWD",
-          "command" : "Resources/brew.sh install homebrew/science/vips"
+          "command" : "Resources/brew.sh install homebrew/science/vips",
+          "pathExtra" : "/usr/local/bin"
         }
       ]
     }
