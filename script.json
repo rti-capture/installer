@@ -8,6 +8,7 @@
       "label" : "Command Line Tools",
 
       "checkCommand" : {
+        "label" : "Checking for Command Line Tools",
         "command" : "$CWD/Resources/check_command_line_tools.sh"
       },
 
@@ -26,6 +27,7 @@
       "label" : "Brew",
 
       "checkCommand" : {
+        "label" : "Checking for Brew",
         "directory" : "$CWD",
         "command" : "Resources/checkBrew.sh"
       },
@@ -43,6 +45,7 @@
     "libgphoto2" : {
 
       "checkCommand" : {
+        "label" : "Checking for libgphoto2",
         "directory" : "$CWD",
         "command" : "Resources/checkBrewPackage.sh libgphoto2",
         "pathExtra" : "/usr/local/bin"
@@ -61,6 +64,7 @@
     "python" : {
 
       "checkCommand" : {
+        "label" : "Checking for python",
         "directory" : "$CWD",
         "command" : "Resources/checkBrewPackage.sh python",
         "pathExtra" : "/usr/local/bin"
@@ -79,6 +83,7 @@
     "pygtk" : {
 
       "checkCommand" : {
+        "label" : "Checking for pygtk",
         "directory" : "$CWD",
         "command" : "Resources/checkBrewPackage.sh pygtk",
         "pathExtra" : "/usr/local/bin"
@@ -97,6 +102,7 @@
     "pyserial" : {
 
       "checkCommand" : {
+        "label" : "Checking for pyserial",
         "command" : "/usr/local/bin/pip show pyserial",
         "pathExtra" : "/usr/local/bin"
       },
@@ -113,6 +119,7 @@
     "autoconf" : {
 
       "checkCommand" : {
+        "label" : "Checking for autoconf",
         "directory" : "$CWD",
         "command" : "Resources/checkBrewPackage.sh autoconf",
         "pathExtra" : "/usr/local/bin"
@@ -131,6 +138,7 @@
     "automake" : {
 
       "checkCommand" : {
+        "label" : "Checking for automake",
         "directory" : "$CWD",
         "command" : "Resources/checkBrewPackage.sh automake",
         "pathExtra" : "/usr/local/bin"
@@ -149,6 +157,7 @@
     "vips" : {
 
       "checkCommand" : {
+        "label" : "Checking for VIPS",
         "directory" : "$CWD",
         "command" : "Resources/checkBrewPackage.sh vips",
         "pathExtra" : "/usr/local/bin"
@@ -166,6 +175,20 @@
   },
 
   "options" : [
+
+#   {
+#     "label" : "Sleep Test",
+
+#     "dependencies" : [ ],
+
+#     "commands" : [
+
+#       {
+#         "command" : "sleep 2",
+#         "label" : "Sleep for two seconds"
+#       }
+#     ]
+#   },
 
     {
       "label" : "RTI Viewer",
