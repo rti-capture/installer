@@ -107,7 +107,6 @@ public class Script {
         }
       }
 
-      UserInterface.setTitle("Installation complete.");
       UserInterface.selectCard("finish");
 
     } catch (FailedStepException e) {

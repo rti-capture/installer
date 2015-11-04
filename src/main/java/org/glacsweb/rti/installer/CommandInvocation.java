@@ -41,7 +41,11 @@ public class CommandInvocation {
 
 	public void run() throws Exception {
 
-    UserInterface.setTitle(label);
+    if (label != null) {
+      UserInterface.setStepLabel(label);
+    } else {
+      UserInterface.setStepLabel(" ");
+    }
 
     String[] bits = StringUtils.split(command, " ");
 
