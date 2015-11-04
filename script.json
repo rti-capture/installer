@@ -196,11 +196,13 @@
       "commands" : [
 
         {
+          "label" : "Installing RTI Viewer",
           "directory" : "$HOME",
           "command" : "mkdir -p mountpoint",
 
           "cleanup" : [
             {
+              "label" : "Installing RTI Viewer",
               "directory" : "$HOME",
               "command" : "rmdir mountpoint"
             }
@@ -208,11 +210,13 @@
         },
 
         {
+          "label" : "Installing RTI Viewer",
           "directory" : "$HOME",
           "command" : "hdiutil attach -mountpoint mountpoint $CWD/Resources/Java/files/RTIViewer-1.1.0.dmg",
 
           "cleanup" : [
             {
+              "label" : "Installing RTI Viewer",
               "directory" : "$HOME",
               "command" : "hdiutil detach mountpoint"
             }
@@ -220,6 +224,7 @@
         },
 
         {
+          "label" : "Installing RTI Viewer",
           "directory" : "$HOME",
           "command" : "$CWD/Resources/sudo.sh cp -r mountpoint/RTIViewer.app /Applications"
         }
@@ -232,11 +237,13 @@
       "commands" : [
 
         {
+          "label" : "Installing RTI Builder",
           "directory" : "$HOME",
           "command" : "mkdir -p mountpoint",
 
           "cleanup" : [
             {
+              "label" : "Installing RTI Builder",
               "directory" : "$HOME",
               "command" : "rmdir mountpoint"
             }
@@ -244,11 +251,13 @@
         },
 
         {
+          "label" : "Installing RTI Builder",
           "directory" : "$HOME",
           "command" : "hdiutil attach -mountpoint mountpoint $CWD/Resources/Java/files/RTIbuilder_2_0_2.dmg",
 
           "cleanup" : [
             {
+              "label" : "Installing RTI Builder",
               "directory" : "$HOME",
               "command" : "hdiutil detach mountpoint"
             }
@@ -256,6 +265,7 @@
         },
 
         {
+          "label" : "Installing RTI Builder",
           "directory" : "$HOME",
           "command" : "$CWD/Resources/sudo.sh cp -r mountpoint/RTIbuilder-v2.0.2.app /Applications"
         }
