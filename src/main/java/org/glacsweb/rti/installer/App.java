@@ -17,7 +17,7 @@ import javax.swing.SwingUtilities;
 public class App 
 {
   public static void main(String[] args) throws Exception {
-System.out.println("user.dir = " + System.getProperty("user.dir"));
+
     String json = FileUtils.readFileToString(new File("script.json"));
 
     // Lines that start with a # symbol are treated as comments.
@@ -33,10 +33,5 @@ System.out.println("user.dir = " + System.getProperty("user.dir"));
 
     // Schedules the application to be run at the correct time in the event queue.
     SwingUtilities.invokeLater(ui);
-
-//   System.out.println(script.dependencies.get("git").check());
-//   script.run();
-
-    
   }
 }
