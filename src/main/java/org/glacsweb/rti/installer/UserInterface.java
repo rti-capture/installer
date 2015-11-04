@@ -198,7 +198,7 @@ public class UserInterface implements Runnable {
     Component verticalGlue_4 = Box.createVerticalGlue();
     finishCard.add(verticalGlue_4);
     
-    JLabel lblNewLabel = new JLabel("<html><h2><center>Installation complete</center></h2><p>The software installation completed without any errors. Press \"Finish\" to quit the installer.</p></html>");
+    JLabel lblNewLabel = new JLabel("<html><h2><center>Installation complete</center></h2><p>The requested options were installed successfully. Click \"Finish\" to quit the installer.</p></html>");
     finishCard.add(lblNewLabel);
     
     Component verticalGlue_5 = Box.createVerticalGlue();
