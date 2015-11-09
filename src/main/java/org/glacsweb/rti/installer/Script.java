@@ -5,6 +5,9 @@ import java.util.HashMap;
 
 public class Script {
 
+  public String introMessage;
+  public String finishMessage;
+
   public HashMap<String,Dependency> dependencies;
   public ArrayList<Option> options;
 

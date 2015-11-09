@@ -1,6 +1,8 @@
 # Configuration file for RTI-VIPS installer.
 
 {
+  "introMessage" : "<html><center><h2>Welcome to the RTI-VIPS installer</h2></center><p>Use this installer to install the software required for the RTI-VIPS system. Click \"Next\" to choose the components to install.</p></html>",
+
   "dependencies" : {
 
     "commandLineTools" : {

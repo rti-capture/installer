@@ -79,6 +79,10 @@ public class UserInterface implements Runnable {
 
     frame = new JFrame();
 
+    String introLabel = "<html><center><h2>Welcome to the installer</h2></center><p>Click \"Next\" to choose the components to install.</p></html>";
+    
+    String finishLabel = "<html><h2><center>Installation complete</center></h2><p>The requested options were installed successfully. Click \"Finish\" to quit the installer.</p></html>";
+
     // Start of paste from Eclipse
 
     frame.setTitle("RTI-VIPS Installer");
@@ -126,8 +130,11 @@ public class UserInterface implements Runnable {
     
     Component verticalGlue = Box.createVerticalGlue();
     introCard.add(verticalGlue);
+
+    if (script.introMessage != null)
+      introLabel = script.introMessage;
     
-    JLabel lblThisSoftwareInstaller = new JLabel("<html><center><h2>Welcome to the RTI-VIPS installer</h2></center><p>Use this installer to install the software required for the RTI-VIPS system. Click \"Next\" to choose the components to install.</p></html>");
+    JLabel lblThisSoftwareInstaller = new JLabel(introLabel);
     introCard.add(lblThisSoftwareInstaller);
     
     Component verticalGlue_3 = Box.createVerticalGlue();
@@ -197,8 +204,11 @@ public class UserInterface implements Runnable {
     
     Component verticalGlue_4 = Box.createVerticalGlue();
     finishCard.add(verticalGlue_4);
-    
-    JLabel lblNewLabel = new JLabel("<html><h2><center>Installation complete</center></h2><p>The requested options were installed successfully. Click \"Finish\" to quit the installer.</p></html>");
+
+    if (script.finishMessage != null)
+      finishLabel = script.finishMessage;
+
+    JLabel lblNewLabel = new JLabel(finishLabel);
     finishCard.add(lblNewLabel);
     
     Component verticalGlue_5 = Box.createVerticalGlue();
