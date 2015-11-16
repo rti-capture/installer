@@ -1,6 +1,6 @@
-# Introduction
+# RTI Capture installer
 
-This installer is a Java application which reads a JSON formatted configuration file and performs a software installation using a wizard-style GUI. The build process produces a self-contained DMG file for OS X 
+This installer is a Java application which reads a JSON formatted configuration file and performs a software installation using a wizard-style GUI. The build process produces a self-contained DMG file for OS X.
 
 The user is able to select from a list of options to install options are then installed with a progress bar and labels showing the current step. After completion of installation, commands that were successful during the installation phase will have their associated clean-up commands executed.
 
