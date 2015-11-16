@@ -10,8 +10,8 @@ import java.awt.GridBagLayout;
 import java.awt.GridLayout;
 import java.awt.Rectangle;
 import java.awt.Toolkit;
-import java.awt.datatransfer.Clipboard;
-import java.awt.datatransfer.StringSelection;
+//import java.awt.datatransfer.Clipboard;
+//import java.awt.datatransfer.StringSelection;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
@@ -285,58 +285,61 @@ public class UserInterface implements Runnable {
 
   public static void selectCard(String card) {
 
-    CardLayout cl = (CardLayout) ui.cards.getLayout();
-    cl.show(ui.cards, card);
+    if (ui != null) {
 
-    if (card.equals("intro")) {
+      CardLayout cl = (CardLayout) ui.cards.getLayout();
+      cl.show(ui.cards, card);
 
-      ui.currentCard = Card.WELCOME;
+      if (card.equals("intro")) {
 
-      ui.setTitle(" ");
+        ui.currentCard = Card.WELCOME;
 
-      ui.nextButton.setLabel("Next");
-      ui.nextButton.setEnabled(true);
-      ui.cancelButton.setEnabled(true);
+        ui.setTitle(" ");
 
-    } else if (card.equals("select")) {
+        ui.nextButton.setLabel("Next");
+        ui.nextButton.setEnabled(true);
+        ui.cancelButton.setEnabled(true);
 
-      ui.currentCard = Card.OPTIONS;
+      } else if (card.equals("select")) {
 
-      ui.setTitle("Select options");
+        ui.currentCard = Card.OPTIONS;
 
-      ui.nextButton.setLabel("Next");
-      ui.nextButton.setEnabled(true);
-      ui.cancelButton.setEnabled(true);
+        ui.setTitle("Select options");
 
-    } else if (card.equals("progress")) {
+        ui.nextButton.setLabel("Next");
+        ui.nextButton.setEnabled(true);
+        ui.cancelButton.setEnabled(true);
 
-      ui.currentCard = Card.PROGRESS;
+      } else if (card.equals("progress")) {
 
-      ui.setTitle("Installation in progress");
+        ui.currentCard = Card.PROGRESS;
 
-      ui.nextButton.setLabel("Next");
-      ui.nextButton.setEnabled(false);
-      ui.cancelButton.setEnabled(false);
+        ui.setTitle("Installation in progress");
 
-    } else if (card.equals("error")) {
+        ui.nextButton.setLabel("Next");
+        ui.nextButton.setEnabled(false);
+        ui.cancelButton.setEnabled(false);
 
-      ui.currentCard = Card.ERROR;
+      } else if (card.equals("error")) {
 
-      ui.setTitle("Error");
+        ui.currentCard = Card.ERROR;
 
-      ui.nextButton.setLabel("Finish");
-      ui.nextButton.setEnabled(true);
-      ui.cancelButton.setEnabled(false);
+        ui.setTitle("Error");
 
-    } else if (card.equals("finish")) {
+        ui.nextButton.setLabel("Finish");
+        ui.nextButton.setEnabled(true);
+        ui.cancelButton.setEnabled(false);
 
-      ui.currentCard = Card.FINISHED;
+      } else if (card.equals("finish")) {
 
-      ui.setTitle(" ");
+        ui.currentCard = Card.FINISHED;
 
-      ui.nextButton.setLabel("Finish");
-      ui.nextButton.setEnabled(true);
-      ui.cancelButton.setEnabled(false);
+        ui.setTitle(" ");
+
+        ui.nextButton.setLabel("Finish");
+        ui.nextButton.setEnabled(true);
+        ui.cancelButton.setEnabled(false);
+      }
     }
   }
 
@@ -346,25 +349,31 @@ public class UserInterface implements Runnable {
   }
 
   public static void copyMessage() {
-    StringSelection selection = new StringSelection(ui.errorPane.getText());
-    Clipboard clipboard = Toolkit.getDefaultToolkit().getSystemClipboard();
-    clipboard.setContents(selection, selection);
+//    StringSelection selection = new StringSelection(ui.errorPane.getText());
+//  Clipboard clipboard = Toolkit.getDefaultToolkit().getSystemClipboard();
+//  clipboard.setContents(selection, selection);
 
     JOptionPane.showMessageDialog(null, "Copied.", "Installer",
         JOptionPane.INFORMATION_MESSAGE);
   }
 
   public static void setMaximumStep(int max) {
-    ui.progressBar.setMaximum(max);
+    if (ui != null) {
+      ui.progressBar.setMaximum(max);
+    }
   }
 
   public static void setStep(int value) {
-    ui.selectCard("progress");
-    ui.progressBar.setValue(value);
+    if (ui != null) {
+      ui.selectCard("progress");
+      ui.progressBar.setValue(value);
+    }
   }
 
   public static void setStepLabel(String label) {
-    ui.stepLabel.setText(label);
+    if (ui != null) {
+      ui.stepLabel.setText(label);
+    }
   }
 
   public void setOptions(String[] options) {

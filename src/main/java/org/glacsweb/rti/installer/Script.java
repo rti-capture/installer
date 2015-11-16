@@ -11,7 +11,7 @@ public class Script {
   public HashMap<String,Dependency> dependencies;
   public ArrayList<Option> options;
 
-  private transient ArrayList<String> selectedOptions;
+  public transient ArrayList<String> selectedOptions;
 
   public void setSelectedOptions(ArrayList<String> selectedOptions) {
     this.selectedOptions = selectedOptions;
@@ -26,6 +26,15 @@ public class Script {
         count += option.commandCount();
 
     return count;
+  }
+
+  public void selectAll() {
+
+    selectedOptions = new ArrayList<String>();
+
+    for (Option option : options) {
+      selectedOptions.add(option.label);
+    }
   }
 
   public void run() throws Exception {
@@ -45,7 +54,7 @@ public class Script {
 
           try {
 
-            if (option.dependencies != null) {
+            if ((option.dependencies != null) && (dependencies != null)) {
 
               for (String dependencyKey : option.dependencies) {
 

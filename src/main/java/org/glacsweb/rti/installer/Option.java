@@ -13,7 +13,7 @@ public class Option {
 
     int count = 0;
 
-    if (dependencies != null) {
+    if ((dependencies != null) && (script.dependencies != null)) {
 
       for (String dependencyKey : dependencies) {
         Dependency dependency = script.dependencies.get(dependencyKey);
